@@ -1,0 +1,23 @@
+{
+  "name": "add-silence2audio",
+  "version": "1.0.0",
+  "description": "A script to prepend silence to audio files, ported from a bash script.",
+  "main": "index.js",
+  "bin": {
+    "add-silence2audio": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ffmpeg",
+    "audio",
+    "silence"
+  ],
+  "author": "cabbagekobe",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cabbagekobe/add-silence2audio"
+  }
+}

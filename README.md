@@ -1,37 +1,66 @@
-# add-silence
+# add-silence2audio
 
-Add a short silence to the beginning of audio files while preserving metadata and cover art.
+A Node.js script to prepend 1.0 seconds of silence to audio files while preserving metadata and cover art.
 
-- Prepends 1.0 seconds of silence to each input file
-- Preserves tags/metadata (`-map_metadata 1`)
-- Preserves embedded cover art if present (`-map 1:v? -c:v copy`)
-- Re-encodes with the same audio bitrate as the source when detectable
-- Supports `.mp3` and `.m4a` in the current directory
+This is a Node.js port of the original `add_silence.sh` script, designed to be easily run via `npx`.
+
+## Features
+
+- Prepends 1.0 seconds of silence to each input file.
+- Preserves all original tags and metadata.
+- Preserves embedded cover art if present.
+- Matches the original audio bitrate when possible to maintain quality.
+- Supports `.mp3` and `.m4a` files.
+- Processes all supported audio files in the current directory.
+- Places processed files into a `with_silence/` subdirectory.
 
 ## Requirements
-- bash
-- ffmpeg and ffprobe available in PATH
+
+- [Node.js](https://nodejs.org/) (which includes `npm` and `npx`)
+- [ffmpeg](https://ffmpeg.org/download.html) and `ffprobe` must be installed and available in your system's PATH.
 
 ## Usage
+
+This tool is designed to be run in the directory containing the audio files you want to process.
+
+### Quickest Method (via npx)
+
+The easiest way to use this tool is to run it directly from GitHub using `npx`. This requires no installation.
+
+In your terminal, `cd` to the directory with your audio files and run:
+
 ```bash
-bash add_silence.sh
+npx git+https://github.com/cabbagekobe/add-silence2audio.git
 ```
 
-By default, this script:
-- Scans the current directory for `*.mp3` and `*.m4a`
-- Creates output files in `with_silence/` with the same file names
-- Matches the original audio bitrate when possible
-- Falls back to reasonable quality when source bitrate is unknown (MP3: `-q:a 2`, AAC: `-b:a 192k`)
+The script will process the files and create a `with_silence` directory with the results.
 
-## Options
-To change the silence duration or output directory, you can modify the variables near the top of the script:
-- `outdir` — output directory name (default: `with_1_2s_silence`)
-- The silence duration is defined in the `-t 1.2` argument in the ffmpeg command (change to your needs)
+### Local Installation (for offline use)
 
-## Notes
-- MP3 files are written with ID3v2.3 and ID3v1 tags for compatibility
-- If the source includes embedded cover art, it is copied without re-encoding
-- The script preserves metadata from the original audio stream
+If you prefer to have a local copy, you can clone the repository and run it.
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/cabbagekobe/add-silence2audio.git
+    ```
+
+2.  **Navigate to the audio file directory:**
+    ```bash
+    # For example:
+    cd /path/to/your/music
+    ```
+
+3.  **Run the script using the local path:**
+    Point `npx` to the cloned directory.
+    ```bash
+    # If you cloned it in your home directory, for example:
+    npx ~/add-silence2audio
+    ```
+    Or, from within the cloned directory itself, you can simply run:
+    ```bash
+    npx .
+    ```
 
 ## License
+
 MIT — see [LICENSE](LICENSE)
